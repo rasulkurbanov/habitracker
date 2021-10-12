@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habitracker</title>
+  </head>
+  <body>
+    {{ request.user }}
+    <p><stro><a href="{% url 'task-create' %}">Create a new task</a></strong></p>
+    <hr>
+    <table>
+      <tr>
+        <th>№</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for task in object_list %}
+      <tr>
+        <td><strong>{{ task.id }}</strong></td>
+        <td><strong>{{ task.title }}</strong></td>
+        <td><strong>{{ task.description }}</strong></td>
+        <td><a href="{% url 'task-detail' task.id %}">More...</a></td>
+        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
