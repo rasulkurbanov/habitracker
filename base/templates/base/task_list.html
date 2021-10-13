@@ -7,9 +7,19 @@
     <title>Habitracker</title>
   </head>
   <body>
-    {{ request.user }}
-    <p><stro><a href="{% url 'task-create' %}">Create a new task</a></strong></p>
+  {% if request.user.is_authenticated %}
+    <p><a href="{% url 'tasks' %}">{{ request.user }}</a></p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+  {% else %}
+    <p><a href="{% url 'tasks' %}">{{ request.user }}</a></p>
+    <p><a href="{% url 'login' %}">Login</a></p>
+  {% endif %}
+    <p><strong><a href="{% url 'task-create' %}">Create a new task</a></strong></p>
     <hr>
+    <form method="GET">
+      <input type="text" name="search-area" value="{{ search_input }}" />
+      <input type="submit" value="Search..."/>
+    </form>
     <table>
       <tr>
         <th>№</th>
@@ -18,7 +28,7 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-      {% for task in object_list %}
+      {% for task in tasks %}
       <tr>
         <td><strong>{{ task.id }}</strong></td>
         <td><strong>{{ task.title }}</strong></td>
